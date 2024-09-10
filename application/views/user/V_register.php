@@ -12,7 +12,7 @@
                     <h4 class="text-right">Register</h4>
                 </div>
                 <form action="<?= site_url('C_user/register'); ?>" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                    <!-- <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>"> -->
                     <div class="row">
                         <div class="col-md-6">
                             <label class="labels">Name</label>
@@ -71,12 +71,25 @@
                         alertSuccess();
                     </script>
                 <?php endif; ?>
+                <?php if ($this->session->flashdata('alertError')) : ?>
+                    <script>
+                        function alertSuccess() {
+                            Swal.fire({
+                                title: 'Error',
+                                text: '<?php echo $this->session->flashdata('alertError'); ?>',
+                                icon: 'error'
+                            });
+                        }
+
+                        alertSuccess();
+                    </script>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
 
-<script>
+<!-- <script>
     // Setup CSRF token for AJAX requests
     $(document).ready(function() {
         $.ajaxSetup({
@@ -85,4 +98,4 @@
             }
         });
     });
-</script>
+</script> -->

@@ -56,6 +56,9 @@
                     </div>
                     <div class="mt-5 text-center w-100">
                         <button class="w-100 btn btn-primary profile-button" type="submit" name="submit">Register</button>
+                        <span>Already have an account? </span>
+                        <a href="<?= base_url('C_user/login') ?>" >Login here</a>
+                
                     </div>
                 </form>
                 <?php if ($this->session->flashdata('alertSuccess')) : ?>

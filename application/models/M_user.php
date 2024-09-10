@@ -10,9 +10,15 @@ class M_user extends CI_Model {
         return $query->row(); 
     }
 
-    public function verify_user($user_email) {
-        $this->db->set('email_verified', 1); 
-        $this->db->where('usr_email', $user_email); 
-        return $this->db->update('user'); 
+    public function update_email_token($newtoken,$email) {
+        $this->db->set('email_verification_token', $newtoken);
+        $this->db->where('usr_email',$email );
+        return $this->db->update('user');
+    }
+
+    public function change_password($newpassword,$email) {
+        $this->db->set('usr_password', $newpassword);
+        $this->db->where('usr_email',$email );
+        return $this->db->update('user');
     }
 }

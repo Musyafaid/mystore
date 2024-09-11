@@ -1,4 +1,5 @@
 <div class="container mt-4">
+        <a class="btn btn-primary" href="<?= base_url('C_'.$this->session->userdata('page').'/logout') ?>">Logout</a>
         <div class="row">
             <!-- Example of items array -->
             <?php

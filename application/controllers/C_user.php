@@ -210,10 +210,11 @@ class C_user extends CI_Controller {
                     $this->session->set_flashdata('alertSuccess', 'Email and Password is match');
                     $session_data = array(
                         'email'    => $mail,
-                        'isLogin'  => true 
+                        'isLogin'  => true,
+                        'page' => 'user'
                     );
                     
-                    $this->session->set_userdata('isLogin' , true );
+                    $this->session->set_userdata($session_data);
                     redirect('C_home/index'); 
                 }else{
                     $this->session->set_flashdata('alertError', 'Password is wrong');
@@ -431,6 +432,11 @@ class C_user extends CI_Controller {
             $this->session->set_flashdata('alertError', 'Invalid email address. Please try again.');
             redirect('C_user/' . $page);
         }
+    }
+
+    public function logout() {
+        $this->session->sess_destroy();
+        redirect('C_user/login');
     }
     
 }

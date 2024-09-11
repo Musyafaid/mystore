@@ -21,4 +21,10 @@ class M_user extends CI_Model {
         $this->db->where('usr_email',$email );
         return $this->db->update('user');
     }
+
+    public function is_verified($email,$status) {
+        $this->db->set('email_verified', $status);
+        $this->db->where('usr_email',$email );
+        return $this->db->update('user');
+    }
 }

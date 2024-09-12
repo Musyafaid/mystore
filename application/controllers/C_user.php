@@ -6,6 +6,7 @@ class C_user extends CI_Controller {
         $this->load->model('M_user');
         $this->load->library('form_validation');
         $this->load->library('upload');
+        $this->load->library('session');
         $this->load->library('email');
     }
 

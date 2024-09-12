@@ -6,6 +6,7 @@ class C_seller extends CI_Controller {
         $this->load->model('M_seller');
         $this->load->library('form_validation');
         $this->load->library('upload');
+        $this->load->library('session');
         $this->load->library('email');
     }
 

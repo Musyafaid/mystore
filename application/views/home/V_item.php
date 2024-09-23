@@ -1,4 +1,4 @@
-<header class="bg-dark py-5">
+<header class="bg-dark py-5 my-5 ">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Shop in style</h1>
@@ -18,12 +18,18 @@
 <!-- Section -->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
+        <h3 class="">Kategori : 
+            <?php if($this->session->flashdata('kategori')) :?>
+                <?=    $this->session->flashdata('kategori') ?>
+            <?php endif; ?>
+
+        </h3>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 flex-wrap">
             <?php foreach($barang as $row) : ?>
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Product image -->
-                    <img class="card-img-top" src="<?= base_url('uploads/' . $row['brg_gambar']) ?>" alt="<?= htmlspecialchars($row['brg_name']) ?>" />
+                    <img class="card-img-top" height="150" src="<?= base_url('uploads/' . $row['brg_gambar']) ?>" alt="<?= htmlspecialchars($row['brg_name']) ?>" />
                     <!-- Product details -->
                     <div class="card-body p-4">
                         <div class="text-center">
@@ -32,7 +38,7 @@
                         </div>
                     </div>
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<?= base_url('C_home/detail_item/').$row['brg_id'] ?>">Add to Cart</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<?= base_url('C_home/detail_item/').$row['brg_id'] ?>">View Detail</a></div>
                     </div>
                 </div>
             </div>
@@ -46,3 +52,30 @@
         
     </div>
 </section>
+
+<?php if ($this->session->flashdata('alertSuccess')) : ?>
+                    <script>
+                        function alertSuccess() {
+                            Swal.fire({
+                                title: 'Success',
+                                text: '<?php echo $this->session->flashdata('alertSuccess'); ?>',
+                                icon: 'success'
+                            });
+                        }
+
+                        alertSuccess();
+                    </script>
+                <?php endif; ?>
+                <?php if ($this->session->flashdata('alertError')) : ?>
+                    <script>
+                        function alertError() {
+                            Swal.fire({
+                                title: 'Error',
+                                text: '<?php echo $this->session->flashdata('alertError'); ?>',
+                                icon: 'error'
+                            });
+                        }
+
+                        alertError();
+                    </script>
+                <?php endif; ?>

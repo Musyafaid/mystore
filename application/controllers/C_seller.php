@@ -8,6 +8,10 @@ class C_seller extends CI_Controller {
         $this->load->library('upload');
         $this->load->library('session');
         $this->load->library('email');
+
+        if($this->session->userdata('isLogin') == true){
+            redirect('C_admin/index');
+        }
     }
 
     public function register() {
@@ -212,11 +216,14 @@ class C_seller extends CI_Controller {
                     $session_data = array(
                         'email'    => $mail,
                         'isLogin'  => true ,
-                        'page' => 'seller'
+                        'page' => 'seller',
+                        'sellerId' =>$seller->pj_id
                     );
                     
+                    echo $seller->pj_id;
+                    
                     $this->session->set_userdata($session_data);
-                    redirect('C_home/index'); 
+                    redirect('C_admin/index'); 
                 }else{
                     $this->session->set_flashdata('alertError', 'Password is wrong');
                     redirect('C_seller/login'); 

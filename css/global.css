@@ -1,9 +1,49 @@
 @import url('https://fonts.cdnfonts.com/css/lexend');
 *{
     font-family: 'Lexend', sans-serif;
-                                
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    background-color: #f8f9fa;
+    color: #495057;
 }
 
-html, body {
-    height: 100%;
+.active{
+    background-color: rgb(117, 117, 117);
 }
+
+.sidebar {
+    background-color: #e9ecef;
+    height: 100vh;
+}
+.sidebar .nav-link {
+    color: #495057;
+    transition: background-color 0.3s ease-in-out;
+}
+.sidebar .nav-link:hover {
+    background-color: #ced4da;
+    color: #212529;
+}
+.sidebar .nav-link.active {
+    background-color: #adb5bd;
+    color: #212529;
+}
+.navbar-light .navbar-brand {
+    color: #212529;
+}
+.main-content {
+    padding: 20px;
+}
+.card-light {
+    background-color: #ffffff;
+    color: #495057;
+    border: 1px solid #dee2e6;
+}
+.navbar {
+    background-color: #e9ecef;
+
+}
+
+
+

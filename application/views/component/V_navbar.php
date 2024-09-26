@@ -34,7 +34,7 @@
                         </button>
                         <?php endif ; ?>
                         <?php if($this->session->userdata('textbtn') == 'login') :  ?>
-                            <a href="<?= base_url('C_user/login/') ?>" class="btn btn-outline-dark mx-2" >
+                            <a href="<?= base_url('C_user/login/') ?>" class="btn btn-outline-darkho mx-2" >
                                 <i class="bi bi-box-arrow-in-right"></i> <?= $this->session->userdata('textbtn') ?>
                             </a>
                         <?php endif ;?>

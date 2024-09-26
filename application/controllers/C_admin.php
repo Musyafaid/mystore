@@ -115,7 +115,7 @@ class C_admin extends CI_Controller {
             redirect('C_admin/add_barang');
         } else {
             $upload_data = $this->upload->data();
-            $gambar_path = 'uploads/' . $upload_data['file_name'];
+            $gambar_path =  $upload_data['file_name'];
             $data_barang = array(
                 'pj_id' => $this->session->userdata('sellerId'),
                 'kategori_id' => $this->input->post('kategori_id'),

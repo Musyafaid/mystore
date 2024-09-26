@@ -1,4 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
 <?php if(validation_errors()) : ?>
 <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -7,9 +10,7 @@
         });
     </script>
 <?php endif ;?>
-<!-- <?=
-    var_dump(validation_errors());
-?> -->
+
 
 <style>
     
@@ -83,7 +84,7 @@ input[type="file"] {
             <h4>Total: <span id="total"><?= 'Rp ' . number_format($total, 2, ',', '.') ?></span></h4>
             <a href="<?= site_url('C_home/clear_cart') ?>" class="btn btn-danger">Clear Cart</a>
         </div>
-        <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Buy Now..
         </button>
     <?php else: ?>
@@ -104,7 +105,6 @@ input[type="file"] {
                     <div class="modal-body">
                                 <div class="card-body d-flex justify-content-center gap-4">
                                     <div class="w-50">
-                                        <input type="text" name="total" value="" >
                                         <div class="mb-5">
                                             <label for="province_id" class="form-label">Provinsi</label>
                                             <select name="province_id" id="province_id" class="form-control">

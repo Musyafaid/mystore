@@ -9,6 +9,11 @@ class M_user extends CI_Model {
         $query = $this->db->get('user'); 
         return $query->row(); 
     }
+    public function get_user_by_id($user_id) {
+        $this->db->where('usr_id', $user_id); 
+        $query = $this->db->get('user'); 
+    return $query->result_array(); 
+    }
 
     public function update_email_token($newtoken,$email) {
         $this->db->set('email_verification_token', $newtoken);

@@ -221,8 +221,7 @@ class C_home extends CI_Controller {
                 
             );
             
-            var_dump($data);
-            
+   
             $this->cart->insert($data);
             $this->session->set_flashdata('alertSuccess', 'Item added to cart successfully!');
             redirect('C_home/view_cart/'); 
@@ -245,7 +244,7 @@ class C_home extends CI_Controller {
                 if($this->form_validation->run() == false){
                     $data['cart_items'] = $this->cart->contents(); 
                     $data['total'] = $this->cart->total(); 
-                    var_dump( $data['cart_items']);
+            
                     $this->session->set_userdata('checkout', count($data['cart_items']));
                     $this->load->view('template/header');
                     $this->load->view('component/V_cart', $data); 
@@ -265,8 +264,9 @@ class C_home extends CI_Controller {
                         'catatan'        => $this->input->post('catatan')
                     );
 
-                 
+                    
                     if($this->M_barang->insert_alamat($data)){
+                        $this->session->set_userdata('alamat',$data);
                         redirect('C_checkout/buy/');
                     }else{
                         echo "Gagal mengirim alamat";
@@ -276,6 +276,7 @@ class C_home extends CI_Controller {
 
             }
     }
+
 
     public function remove_item($rowid) {
         if(!$this->session->userdata('userId')){

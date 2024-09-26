@@ -210,13 +210,15 @@ class C_user extends CI_Controller {
                 if(password_verify($password,$user->usr_password)){
                     $this->session->set_flashdata('alertSuccess', 'Email and Password is match');
                     $session_data = array(
-                        'email'    => $mail,
+                        'email'    => $email,
                         'isLogin'  => true,
-                        'page' => 'user'
+                        'userId' => $user->usr_id
                     );
                     
                     $this->session->set_userdata($session_data);
-                    redirect('C_home/index'); 
+                    var_dump( $this->session->userdata());
+                    
+                    redirect('C_home/landing/'); 
                 }else{
                     $this->session->set_flashdata('alertError', 'Password is wrong');
                     redirect('C_user/login'); 

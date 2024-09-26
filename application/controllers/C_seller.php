@@ -9,7 +9,7 @@ class C_seller extends CI_Controller {
         $this->load->library('session');
         $this->load->library('email');
 
-        if($this->session->userdata('isLogin') == true){
+        if($this->session->userdata('sellerId')){
             redirect('C_admin/index');
         }
     }
@@ -216,7 +216,6 @@ class C_seller extends CI_Controller {
                     $session_data = array(
                         'email'    => $mail,
                         'isLogin'  => true ,
-                        'page' => 'seller',
                         'sellerId' =>$seller->pj_id
                     );
                     

@@ -27,7 +27,41 @@
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill"><?= $this->session->userdata('checkout') ?></span>
                         </a>
+
+                        <?php if($this->session->userdata('textbtn') == 'logout') :?>
+                        <button  onclick="confirmLogout()"  class="btn btn-outline-danger mx-2" >
+                             <i class="bi bi-box-arrow-left"></i> <?= $this->session->userdata('textbtn') ?>
+                        </button>
+                        <?php endif ; ?>
+                        <?php if($this->session->userdata('textbtn') == 'login') :  ?>
+                            <a href="<?= base_url('C_user/login/') ?>" class="btn btn-outline-dark mx-2" >
+                                <i class="bi bi-box-arrow-in-right"></i> <?= $this->session->userdata('textbtn') ?>
+                            </a>
+                        <?php endif ;?>
                    
         </div>    
     </div>
 </nav>
+
+
+
+<script>
+        function confirmLogout() {
+         
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You will be logged out of your account!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, log out!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '<?= base_url('C_user/logout'); ?>';
+                }
+            });
+        }
+    </script>

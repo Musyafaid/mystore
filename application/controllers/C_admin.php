@@ -8,7 +8,7 @@ class C_admin extends CI_Controller {
         $this->load->library('encrypt');
         $this->load->library('encryption');
 
-        if ($this->session->userdata('isLogin') == false) {
+        if (!$this->session->userdata('sellerId') ) {
             redirect('C_seller/login');
         }
     }
@@ -30,11 +30,14 @@ class C_admin extends CI_Controller {
     }
 
     public function index() {
+
+        $data['allproduct'] = $this->M_barang->count_barang_by_seller_id($this->session->userdata('sellerId')) ;
+
         $this->load->view('template/header');
         $this->load->view('dashboard/V_sidebar');
         $this->load->view('dashboard/V_navbar');
         $this->load->view('dashboard/V_content');
-        $this->load->view('component/V_dashboard');
+        $this->load->view('component/V_dashboard',$data);
         $this->load->view('dashboard/V_content_footer');
         $this->load->view('template/footer');
     }
@@ -159,7 +162,6 @@ class C_admin extends CI_Controller {
             redirect('C_admin/get_barang');
             return;
         }
-        // echo $barang_id;
         $data = array(
             'kategori' => $this->get_kategori(),
             'barang'   => $this->M_barang->get_barang_by_id($barang_id)
@@ -175,7 +177,6 @@ class C_admin extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('kategori', 'All items');
     
-            // Load views
             $this->load->view('template/header');
             $this->load->view('dashboard/V_sidebar');
             $this->load->view('dashboard/V_navbar');
@@ -209,7 +210,7 @@ class C_admin extends CI_Controller {
         $barang_id = $this->decrypt_id($encrypted_id);
         
         if ($barang_id === false) {
-            redirect('C_admin/get_barang');
+            redirect('C_admin/get_barang/');
             return;
         }
     

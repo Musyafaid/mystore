@@ -7,11 +7,7 @@
                     <i class="bi bi-speedometer2"></i> Dashboard
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('C_admin/users'); ?>">
-                    <i class="bi bi-people"></i> Users
-                </a>
-            </li>
+           
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-toggle="collapse" href="#productsMenu" role="button" aria-expanded="false" aria-controls="productsMenu">
                     <i class="bi bi-box-seam"></i> Products
@@ -24,11 +20,7 @@
                             </a>
                         </li>
                       
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-pencil"></i> Edit
-                            </a>
-                        </li>
+                       
                     </ul>
                 </div>
             </li>
@@ -37,11 +29,11 @@
                     <i class="bi bi-bar-chart-line"></i> Analytics
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('C_admin/settings'); ?>">
                     <i class="bi bi-gear"></i> Settings
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <button onclick="confirmLogout()" class="nav-link w-100 text-start" >
                 <i class="bi bi-box-arrow-left"></i> Logout
@@ -65,7 +57,6 @@
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Redirect to logout URL or perform logout action
                     window.location.href = '<?= base_url('C_admin/logout'); ?>';
                 }
             });

@@ -35,7 +35,7 @@
                         </select>
                        
                     </div>
-                    <input type="text" name="pj_id" value="<?= $this->session->userdata('sellerId') ?>" disabled>
+                    <input type="text" name="pj_id" hidden value="<?= $this->session->userdata('sellerId') ?>" disabled>
                     <div class="mb-3">
                         <label for="brg_name" class="form-label">Nama Barang</label>
                         <input type="text" class="form-control" name="brg_name" id="brg_name" placeholder="Masukkan nama barang">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modaladadmi-footer m-2">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button  type="submit" class="btn btn-primary">Simpan</button>
             </div>

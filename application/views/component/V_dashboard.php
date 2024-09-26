@@ -10,7 +10,7 @@
         <div class="card card-light shadow-sm">
             <div class="card-body">
                 <h5 class="card-title">Products</h5>
-                <p class="card-text"><i class="bi bi-box-seam"></i> 1222 Products</p>
+                <p class="card-text"><i class="bi bi-box-seam"></i> <?= $allproduct  ?> Products</p>
             </div>
         </div>
     </div>

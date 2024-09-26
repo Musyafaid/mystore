@@ -32,12 +32,10 @@
                         <div class="d-flex mt-3 align-items-center gap-2 my-2">
                             <input type="number" name="quantity" value="1" min="1" max="<?= $row['brg_stok'] ?>" class="form-control me-2 qty-input" style="width: 70px;">
                             <span class="total-price fw-bold text-success text-center" id="total-price-<?= $row['brg_id'] ?>">Rp <?= number_format($row['brg_harga'], 0, ',', '.') ?></span>
-                            <!-- <input type="number" name="quantity" value="1" min="1" class="form-control me-2" style="width: 70px;"> -->
                         </div>
                         <button type="submit" class="btn btn-success">Add to Cart</button>
                     </form>
 
-                    <!-- Seller Information -->
                     <div class="border-top border-secondary-subtle py-2 mt-3">
                         <div class="d-flex align-items-center">
                             <img class="rounded-circle me-3" src="<?= base_url('uploads/') . $row['pj_gambar'] ?>" alt="Seller Image" width="50" height="50">
@@ -55,7 +53,7 @@
 </section>
 
 <script>
-    // Menangani perubahan quantity dan memperbarui total price
+   
     document.querySelectorAll('.qty-input').forEach(function(input) {
         input.addEventListener('input', function() {
             const harga = parseFloat(this.closest('form').querySelector('.brg_harga').value);

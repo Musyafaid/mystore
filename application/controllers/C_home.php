@@ -6,6 +6,8 @@ class C_home extends CI_Controller {
         $this->load->model('M_barang');
         $this->load->library('pagination');
         $this->load->library('session');
+
+       
     }
 
     private function get_kategori() {
@@ -22,6 +24,17 @@ class C_home extends CI_Controller {
 
     private function get_barang_by_name($item_name,$limit,$start){
         return $this->M_barang->get_barang_by_name($item_name,$limit,$start);
+    }
+
+
+    public function wilayah()
+    {
+       
+        var_dump($this->input->post());
+        $this->load->view('template/header');
+        $this->load->view('component/V_alamat');
+        $this->load->view('template/footer');
+        
     }
 
     public function landing() {
@@ -46,18 +59,24 @@ class C_home extends CI_Controller {
         $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
         $config['last_tag_close'] = '</span></li>';
         
-        // Add disabled state for previous and next links
      
-       
-       
         $this->pagination->initialize($config);
 
         $page = $this->uri->segment(3);
         $page = ($page) ? $page : 0;
 
+        if($this->session->userdata('userId')){
+            $textbtn = "logout";
+        }else{
+            $textbtn = "login";
+        }
+
+        $this->session->set_userdata('textbtn',$textbtn);
+
         $data = array(
             'kategori' => $this->get_kategori(),
             'barang'   => $this->M_barang->get_barang($config['per_page'], $page)
+           
         );
 
         
@@ -188,58 +207,119 @@ class C_home extends CI_Controller {
 
 
     public function add_to_cart() {
-        $data = array(
-            'id' => $this->input->post('brg_id'),
-            'name' => $this->input->post('brg_name'),
-            'qty' => $this->input->post('quantity'),
-            'price' => $this->input->post('brg_harga'),
-            'max_qty' => $this->input->post('max_qty'),
-            'gambar' => $this->input->post('brg_gambar')
+        if(!$this->session->userdata('userId')){
+            redirect('C_user/login/');
+        }else{
+
+            $data = array(
+                'id' => $this->input->post('brg_id'),
+                'name' => $this->input->post('brg_name'),
+                'qty' => $this->input->post('quantity'),
+                'price' => $this->input->post('brg_harga'),
+                'max_qty' => $this->input->post('max_qty'),
+                'gambar' => $this->input->post('brg_gambar')
+                
+            );
             
-        );
+            var_dump($data);
+            
+            $this->cart->insert($data);
+            $this->session->set_flashdata('alertSuccess', 'Item added to cart successfully!');
+            redirect('C_home/view_cart/'); 
+        }
+        }
+    
+        
+        public function view_cart() {
+            if(!$this->session->userdata('userId')){
+                redirect('C_user/login/');
+            }else{
+                $this->form_validation->set_rules('province_id', 'Provinsi', 'required');
+                $this->form_validation->set_rules('city_id', 'Kota/Kabupaten', 'required');
+                $this->form_validation->set_rules('district_id', 'Kecamatan', 'required');
+                $this->form_validation->set_rules('subdistrict_id', 'Kelurahan', 'required');
+                $this->form_validation->set_rules('address', 'Alamat Lengkap', 'required');
+                
+                
+                
+                if($this->form_validation->run() == false){
+                    $data['cart_items'] = $this->cart->contents(); 
+                    $data['total'] = $this->cart->total(); 
+                    var_dump( $data['cart_items']);
+                    $this->session->set_userdata('checkout', count($data['cart_items']));
+                    $this->load->view('template/header');
+                    $this->load->view('component/V_cart', $data); 
+                    $this->load->view('template/footer');
+                   
+                }else{
+                    var_dump($this->input->post());
 
-        var_dump($data);
-    
-        $this->cart->insert($data);
-        $this->session->set_flashdata('alertSuccess', 'Item added to cart successfully!');
-        redirect('C_home/view_cart/'); 
-    }
-    
+                    $data = array(
+                        'usr_id'          => $this->session->userdata('userId'), // Assuming usr_id is posted or from session
+                        'provinsi'        => $this->input->post('selected_province_name'),
+                        'kota'            => $this->input->post('selected_city_name'),
+                        'kecamatan'       => $this->input->post('selected_district_name'),
+                        'kelurahan'       => $this->input->post('selected_subdistrict_name'),
+                        'alamat_lengkap'  => $this->input->post('address'), // Full address from form
+                        'kode_pos'        => $this->input->post('selected_postal_code'),
+                        'catatan'        => $this->input->post('catatan')
+                    );
 
-    public function view_cart() {
-        $data['cart_items'] = $this->cart->contents(); 
-        $data['total'] = $this->cart->total(); 
-      
-       $this->session->set_userdata('checkout', count($data['cart_items']));
-    
-        $this->load->view('template/header');
-        $this->load->view('component/V_cart', $data); 
-        $this->load->view('template/footer');
+                 
+                    if($this->M_barang->insert_alamat($data)){
+                        redirect('C_checkout/buy/');
+                    }else{
+                        echo "Gagal mengirim alamat";
+                    }
+
+                }
+
+            }
     }
 
     public function remove_item($rowid) {
-        $this->cart->remove($rowid); 
-        $this->session->set_flashdata('alertSuccess', 'Item berhasil dihapus dari cart.');
-        redirect('C_home/view_cart'); 
+        if(!$this->session->userdata('userId')){
+            redirect('C_user/login/');
+        }else{
+
+            $this->cart->remove($rowid); 
+            $this->session->set_flashdata('alertSuccess', 'Item berhasil dihapus dari cart.');
+            redirect('C_home/view_cart'); 
+        }
     }
 
     public function clear_cart() {
-        $this->cart->destroy(); 
-        $this->session->set_flashdata('alertSuccess', 'Cart berhasil dikosongkan.');
-        redirect('C_home/view_cart');
+        if(!$this->session->userdata('userId')){
+            redirect('C_user/login/');
+        }else{
+
+            $this->cart->destroy(); 
+            $this->session->set_flashdata('alertSuccess', 'Cart berhasil dikosongkan.');
+            redirect('C_home/view_cart');
+        }
     }
 
     public function update_cart() {
-        $data = $this->input->post('cart');
-        foreach ($data as $id => $qty) {
-            $this->cart->update(array(
-                'rowid' => $id,
-                'qty'   => $qty
-            ));
+        $rowid = $this->input->post('rowid');
+        $qty = $this->input->post('qty');
+    
+        if ($rowid && $qty) {
+            $data = [
+                'rowid' => $rowid,
+                'qty' => $qty
+            ];
+    
+            $this->cart->update($data);
+    
+            echo json_encode(['status' => 'success']);
+       
+        } else {
+            echo json_encode(['status' => 'failed']);
         }
-        $this->session->set_flashdata('alertSuccess', 'Cart berhasil diperbarui.');
-        redirect('C_home/view_cart');
     }
+
+
+    
     
     
     

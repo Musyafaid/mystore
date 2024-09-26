@@ -34,12 +34,32 @@ class M_barang extends Ci_Model {
         return $query->result_array();
     }
     
+    public function get_seller_by_barang_id($barang_id) {
+        $this->db->where('brg_id',$barang_id);
+        $this->db->select('pj_id');
+        $query = $this->db->get('barang');
+        return $query->row();
+    }
     public function get_barang_by_name($item_name,$limit, $start) {
         $this->db->limit($limit, $start);
         $this->db->like('brg_name',$item_name);
         return $this->db->get('barang')->result_array();
     }
     
+
+    public function insert_pemesanan($data) {
+        $this->db->insert('pemesanan', $data);
+        return $this->db->insert_id(); 
+    }
+    
+    public function insert_pemesanan_detail($data) {
+       return $this->db->insert('pemesanan_detail',$data);
+    
+    }
+    public function insert_alamat($data) {
+       return $this->db->insert('alamat_pengiriman',$data);
+    
+    }
     
     
     public function count_barang_by_search($item_name) {
